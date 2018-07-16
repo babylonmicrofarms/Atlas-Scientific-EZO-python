@@ -4,6 +4,10 @@
 It is highly recommended to install Raspbian Jessie releases on 18th March 2016.
 http://downloads.raspberrypi.org/raspbian/images/raspbian-2016-03-18/2016-03-18-raspbian-jessie.zip
 
+### Build Python package for PyPi
+    python3 setup.py sdist bdist_wheel
+    
+
 ### Expand file system
     
 Expand file system by following this:

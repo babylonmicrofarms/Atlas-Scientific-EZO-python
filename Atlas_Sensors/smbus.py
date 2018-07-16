@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 from time import sleep
 from smbus2 import SMBus, SMBusWrapper, i2c_msg
+import logging
 
 class AtlasSMBus:
 	long_timeout = 1.5         	# the timeout needed to query readings and calibrations
@@ -9,10 +10,11 @@ class AtlasSMBus:
 	default_address = 98     	# the default address for the sensor
 	current_addr = default_address
 
-	def __init__(self, address=default_address, bus=default_bus):
-		print("Pure Python EZO Wrapper")
-		self.bus_num = bus
 
+	def __init__(self, address=default_address, bus=default_bus):
+		self.logger.debug("Pure Python EZO Wrapper")
+		self.bus_num = bus
+		self.logger = logging.getLogger('read-sensors')
 		self.set_i2c_address(address)
 
 
@@ -29,7 +31,7 @@ class AtlasSMBus:
 			with SMBusWrapper(1) as bus:
 				bus.i2c_rdwr(write)
 		except OSError:
-			print("I2C Error!")
+			self.logger.debug("AtlasSMBus I2C Error!")
 			return -1
 
 	def read(self, num_of_bytes=31):
@@ -40,13 +42,13 @@ class AtlasSMBus:
 			with SMBusWrapper(1) as bus:
 				bus.i2c_rdwr(read)
 		except OSError:
-			print("I2C Error!")
+			self.logger.debug("AtlasSMBus I2C Error!")
 			return "-1"
 		# The response code is the first character in the buffer
 		# 1 is good, 2 is malformed command, 254 is needs more time, and 255 is no data
 		response_code = ord(read.buf[0])
 		if response_code == 1:
-			print("Command Successful!")
+			self.logger.debug("AtlasSMBus Command Successful!")
 			# Slice the buffer returned from the read, convert to ascii, and remove null characters
 			result = read.buf[1:16].decode('ascii').rstrip('\x00')
 			return result
