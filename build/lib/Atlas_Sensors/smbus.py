@@ -12,9 +12,10 @@ class AtlasSMBus:
 
 
 	def __init__(self, address=default_address, bus=default_bus):
+		self.logger = logging.getLogger('read-sensors')
 		self.logger.debug("Pure Python EZO Wrapper")
 		self.bus_num = bus
-		self.logger = logging.getLogger('read-sensors')
+		
 		self.set_i2c_address(address)
 
 
