@@ -37,7 +37,7 @@ class AtlasSMBus:
 
 	def read(self, num_of_bytes=31):
 		# Make an i2c read message object to read 8 bytes back from the sensor address
-		read = i2c_msg.read(self.current_addr, 8)
+		read = i2c_msg.read(self.current_addr, num_of_bytes)
 		# Initiate read on the i2c bus
 		try:
 			with SMBusWrapper(1) as bus:
@@ -51,7 +51,7 @@ class AtlasSMBus:
 		if response_code == 1:
 			self.logger.debug("AtlasSMBus Command Successful!")
 			# Slice the buffer returned from the read, convert to ascii, and remove null characters
-			print(read.buf)
+			print(read.buf[1:24].decode('ascii').rstrip('\x00'))
 			result = read.buf[1:16].decode('ascii').rstrip('\x00')
 			return result
 		elif response_code != 1:
