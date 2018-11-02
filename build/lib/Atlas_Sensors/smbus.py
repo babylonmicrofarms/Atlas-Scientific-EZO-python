@@ -51,7 +51,7 @@ class AtlasSMBus:
 		if response_code == 1:
 			self.logger.debug("AtlasSMBus Command Successful!")
 			# Slice the buffer returned from the read, convert to ascii, and remove null characters
-			print(read.buf[1:24].decode('ascii').rstrip('\x00'))
+			# print(read.buf[1:16].decode('ascii').rstrip('\x00'))
 			result = read.buf[1:16].decode('ascii').rstrip('\x00')
 			return result
 		elif response_code != 1:
