@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name='Atlas_Sensors',
-    version='0.2.2dev',
+    version='0.2.3dev',
     packages=['Atlas_Sensors'],
     license='MIT',
     author='Sam Korn',
@@ -11,5 +11,5 @@ setuptools.setup(
 		'smbus2',
     ],
 #    long_description=open('README.txt').read(),
-	url='https://github.com/sako0938/Raspberry-Pi-sample-code'
+	url='https://github.com/sako0938/Atlas-Scientific-EZO-python'
 )
