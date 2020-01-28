@@ -42,7 +42,7 @@ class AtlasSMBus(object):
 				bus.i2c_rdwr(write)
 				# bus.write_block_data(self.current_addr,0, cmdarray)
 		except OSError:
-			self.logger.debug("AtlasSMBus I2C Error!")
+			self.logger.error("AtlasSMBus I2C Error!")
 			return -1
 
 	def read(self, num_of_bytes=31):
@@ -61,7 +61,7 @@ class AtlasSMBus(object):
 				# 	d = bus.read_byte(self.current_addr)
 
 		except OSError:
-			self.logger.debug("AtlasSMBus I2C Error!")
+			self.logger.error("AtlasSMBus I2C Error!")
 			return "I2C OSError"
 
 		# print(data)
@@ -85,8 +85,12 @@ class AtlasSMBus(object):
 			result = "".join(list(map(lambda x: chr(x), data[1:] ))).rstrip('\x00')
 			return result
 		elif rc != 1:
+			# Check for wildly wrong response codes
+			if rc not in list(response_codes.keys()):
+				self.logger.error(f"Garbled RC: {rc}, probable communication error.")
+				return "BAD READ"
 			# Return to the user the error code if error occured
-			self.logger.debug("Error {} --> {}".format(rc,self.response_codes[rc]))
+			self.logger.error("Error {} --> {}".format(rc,self.response_codes[rc]))
 			return "Error {} --> {}".format(rc,self.response_codes[rc])
 
 
