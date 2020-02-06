@@ -86,7 +86,7 @@ class AtlasSMBus(object):
 			return result
 		elif rc != 1:
 			# Check for wildly wrong response codes
-			if rc not in list(response_codes.keys()):
+			if rc not in list(self.response_codes.keys()):
 				self.logger.error(f"Garbled RC: {rc}, probable communication error.")
 				return "BAD READ"
 			# Return to the user the error code if error occured

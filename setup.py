@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name='Atlas_Sensors',
-    version='0.2.4dev',
+    version='0.2.5dev',
     packages=['Atlas_Sensors'],
     license='MIT',
     author='Sam Korn',
